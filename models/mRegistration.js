@@ -1,13 +1,13 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var connect = require('./../models/connection');
+const express = require('express');
+const mongoose = require('mongoose');
+const connect = require('./../models/connection');
 
-var uniqueValidator = require('mongoose-unique-validator');
+const uniqueValidator = require('mongoose-unique-validator');
 
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var registrationSchema = new Schema ({
+const registrationSchema = new Schema ({
     Username: { type: String, required: true, unique: true },
     Email: { type: String, required: true, unique: true },
     Password: String,
