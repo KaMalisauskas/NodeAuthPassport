@@ -3,6 +3,7 @@ var connect = require('./../models/connection');
 var mongoose = require('mongoose');
 var registrationSchema = require('./../models/mRegistration');
 var bodyParser = require('body-parser');
+var flash = require('connect-flash');
 
 var passport = require('passport');
 
@@ -20,7 +21,7 @@ exports.index = function(req, res) {
 
 exports.login = function(req, res) {
     var sessData = req.session;
-    res.render('login', {title: 'Login', success: sessData.success, errors: sessData.errors, err: sessData.err} );
+    res.render('login', {title: 'Login', success: sessData.success, errors: sessData.errors, message: req.flash('error')} );
     req.session.destroy();
 }
 
@@ -97,14 +98,15 @@ exports.registration = function(req, res) {
 
 exports.auth = passport.authenticate('local', {
     successRedirect: '/main',
-    failureRedirect: '/login'
+    failureRedirect: '/login',
+    failureFlash: true
 });
 
 exports.main = function(req, res) {
 
     console.log(req.user);
     console.log(req.isAuthenticated());
-    res.render('main', {title: 'main'});
+    res.render('main', {title: 'main', username: req.session.username});
 
 }
 

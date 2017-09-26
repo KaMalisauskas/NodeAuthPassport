@@ -6,9 +6,7 @@
 </head>
 <body>
     <h1>Login:</h1>
-    <% if (success) {%>
-    <p>Success!!</p>
-    <% } else { %>
+
     <% if(errors) { %>
     <ul>
         <% for ( var error in errors) { %>
@@ -16,11 +14,8 @@
         <%}%>
     </ul>
     <% } %>
-    <% } %>
 
-    <%if(err) {%>
-    <p><%=err.msg%></p>
-    <%}%>
+<p><%=message%></p>
 
     <form method="post" action="/login">
         Username: <input type="text" name="username">

@@ -14,7 +14,7 @@ var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 var connect = require('./models/connection');
 var bcryp = require('bcrypt');
-
+var flash = require('connect-flash');
 
 var index = require('./routes/rIndex');
 
@@ -37,11 +37,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
-
-//url
-
-app.use('/', index);
 
 //login auth
 passport.use(new LocalStrategy(
@@ -69,13 +66,13 @@ passport.use(new LocalStrategy(
 
                         } else {
 
-                            return done(null, false);
+                            return done(null, false, {message: "password doesnt match"});
                         }
                     });
 
                 } else {
 
-                    return done(null, false);
+                    return done(null, false, {message: "invalid username"});
 
                 }
             });
@@ -85,6 +82,8 @@ passport.use(new LocalStrategy(
     }
 ));
 
+//url
+app.use('/', index);
 
 //seting port
 var port = process.env.PORT || 8882;

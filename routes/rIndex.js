@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var connect = require('./../models/connection');
 var registrationSchema = require('./../models/mRegistration');
 var passport = require('passport');
+var registrationSchema = require('./../models/mRegistration');
 
 //requesting controllers
 var indexController = require('./../controllers/cIndex');
@@ -38,8 +39,18 @@ function authenticationMiddleware() {
     return (req, res, next) => {
         console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
 
-        if (req.isAuthenticated()) return next();
-        res.redirect('/login');
+        var User = mongoose.model('Users', registrationSchema);
+
+        User.find({_id:req.session.passport.user.user_id}, function(err, user) {
+            if(err) throw err;
+            req.session.username = user;
+            if (req.isAuthenticated()) return next();
+            res.redirect('/login')
+
+        })
+
+
+
     }
 }
 
