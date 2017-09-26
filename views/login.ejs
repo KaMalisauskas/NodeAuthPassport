@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+</head>
+<body>
+    <h1>Login:</h1>
+    <% if (success) {%>
+    <p>Success!!</p>
+    <% } else { %>
+    <% if(errors) { %>
+    <ul>
+        <% for ( var error in errors) { %>
+        <li> <%= errors[error].msg %> </li>
+        <%}%>
+    </ul>
+    <% } %>
+    <% } %>
+
+    <%if(err) {%>
+    <p><%=err.msg%></p>
+    <%}%>
+
+    <form method="post" action="/login">
+        Username: <input type="text" name="username">
+        Password: <input type="password" name="password">
+        <input type="submit">
+    </form>
+    <a href="/">Register</a>
+</body>
+</html>
